@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerLevelSystem : MonoBehaviour
+{
+
+    public int currentLevel;
+    public int currentXP;
+    public int MaxLevel;
+
+    public int[] ExpToNextLevel;
+
+    void Awake(){
+        currentLevel = 1;
+        currentXP = 0;
+    }
+    void Start(){
+        ExpToNextLevel = new int [MaxLevel+1];
+        ExpToNextLevel[1] = 15;
+        for(int i =2;i<MaxLevel;i++){
+            ExpToNextLevel[i] = Mathf.RoundToInt(ExpToNextLevel[i-1]*1.2f);
+        }
+    }
+    void UpDate(){
+        if(currentLevel >= 0){
+            AddExp(200);
+            Debug.Log("XpGiven");
+        }
+    }
+     public void AddExp(int amount){
+        currentXP += amount;
+        if(currentXP >= ExpToNextLevel[currentLevel]){
+            LevelUp();
+        }
+        }
+
+        private void LevelUp(){
+            currentLevel++;
+            
+        }
+    }
